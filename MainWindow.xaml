@@ -7,7 +7,7 @@
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=system"
         xmlns:vm="clr-namespace:PMSAppWPF.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="900">
+        Title="Process Monitoring System"  Height="650" Width="925"  >
     <Window.Resources>
         <vm:ProcessViewModel x:Key="pvm" />
         <DataTemplate x:Key="SysProcessDT">
@@ -24,6 +24,32 @@
                 <TextBlock Grid.Column="3" Text="{Binding PriorityClass}" Foreground="Black" />
             </Grid>
         </DataTemplate>
+        <Style x:Key="datagridHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="DarkCyan" />
+            <Setter Property="Foreground" Value="WhiteSmoke" />
+            <Setter Property="BorderBrush" Value="WhiteSmoke" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="HorizontalContentAlignment" Value="1" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="DarkCyan" />
+            <Setter Property="Foreground" Value="WhiteSmoke" />
+            <Setter Property="MinWidth" Value="50" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" RenderingBias="Quality" Opacity="10"></DropShadowEffect>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ProgressBar">
+            <Setter Property="Foreground" Value="LightGreen" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" ShadowDepth="2" RenderingBias="Quality" Opacity="10"></DropShadowEffect>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!--<ObjectDataProvider x:Key="processList" MethodName="GetProcesses" ObjectType="{x:Type diag:Process}" />-->
     </Window.Resources>
     <Grid Margin="5" DataContext="{StaticResource pvm}">
@@ -44,7 +70,7 @@
                     </TextBox.InputBindings>
                 </TextBox>
             </StackPanel>
-            <Button Grid.Column="1" HorizontalAlignment="Center" Command="{Binding RefreshList}">Refresh</Button>
+            <Button Grid.Column="1" HorizontalAlignment="Right" Command="{Binding RefreshList}">Refresh</Button>
         </UniformGrid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -52,10 +78,10 @@
                 <ColumnDefinition Width="365*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Margin="1">
-                <TextBlock Text="System Processes" HorizontalAlignment="Center"/>
-                <DataGrid Height="280" ItemsSource="{Binding AllProcesses,Mode=OneWay}" IsManipulationEnabled="False" AutoGenerateColumns="False" x:Name="Allgrid" >
+                <TextBlock Text="System Processes" HorizontalAlignment="Center" Foreground="DarkGreen" FontWeight="DemiBold"/>
+                <DataGrid Height="280" ItemsSource="{Binding AllProcesses,Mode=OneWay}" VerticalScrollBarVisibility="Hidden" IsManipulationEnabled="False" AutoGenerateColumns="False" x:Name="Allgrid" >
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn HeaderStyle="{StaticResource datagridHeader}">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox 
@@ -66,27 +92,27 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}"  Foreground="Black" />
-                        <DataGridTextColumn Header="Process Name" Binding="{Binding ProcessName}" Foreground="Black" />
-                        <DataGridTextColumn Header="Size" Binding="{Binding WorkingSet64, StringFormat=' {0} Bytes'}" Foreground="Black" />
-                        <DataGridTextColumn Header="Private Memory" Binding="{Binding PrivateMemorySize64, StringFormat=' {0} Bytes'}" Foreground="Black" />
-                        <DataGridTextColumn Header="Virtual Memory" Binding="{Binding VirtualMemorySize64, StringFormat=' {0} Bytes'}" Foreground="Black" />
-                        <DataGridTextColumn Header="Working Set" Binding="{Binding WorkingSet64, StringFormat=' {0} Bytes'}" Foreground="Black" />
-                        <DataGridTextColumn Header="Paged Memory Size" Binding="{Binding PagedMemorySize, StringFormat=' {0} Bytes'}" Foreground="Black" />
-                        <DataGridTextColumn Header="Paged System Memory Size" Binding="{Binding PagedSystemMemorySize, StringFormat=' {0} Bytes'}" Foreground="Black" />
-                        <DataGridTextColumn Header="Non Paged Memory Size" Binding="{Binding NonpagedSystemMemorySize, StringFormat=' {0} Bytes'}" Foreground="Black" />
-                        <DataGridTextColumn Header="Priority" Binding="{Binding PriorityClass}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="ID" Binding="{Binding Id}"  Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Process Name" Binding="{Binding ProcessName}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Size" Binding="{Binding WorkingSet64, StringFormat=' {0} Bytes'}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Private Memory" Binding="{Binding PrivateMemorySize64, StringFormat=' {0} Bytes'}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Virtual Memory" Binding="{Binding VirtualMemorySize64, StringFormat=' {0} Bytes'}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Working Set" Binding="{Binding WorkingSet64, StringFormat=' {0} Bytes'}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Paged Memory Size" Binding="{Binding PagedMemorySize, StringFormat=' {0} Bytes'}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Paged System Memory Size" Binding="{Binding PagedSystemMemorySize, StringFormat=' {0} Bytes'}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Non Paged Memory Size" Binding="{Binding NonpagedSystemMemorySize, StringFormat=' {0} Bytes'}" Foreground="Black" />
+                        <DataGridTextColumn IsReadOnly="True" HeaderStyle="{StaticResource datagridHeader}"  Header="Priority" Binding="{Binding PriorityClass}" Foreground="Black" />
                     </DataGrid.Columns>
 
                 </DataGrid>
             </StackPanel>
             <StackPanel Grid.Column="1" Margin="1">
-                <TextBlock Text="Selected Processes" HorizontalAlignment="Center"/>
-                <DataGrid Height="Auto" ItemsSource="{Binding SelectedProcesses,Mode=OneWay}" IsReadOnly="True" IsManipulationEnabled="False" AutoGenerateColumns="False">
+                <TextBlock Text="Selected Processes" HorizontalAlignment="Center" Foreground="DarkGreen" FontWeight="DemiBold"/>
+                <DataGrid Height="Auto" ItemsSource="{Binding SelectedProcesses,Mode=OneWay}" VerticalScrollBarVisibility="Hidden" IsReadOnly="True" IsManipulationEnabled="False" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}"  Foreground="Black" />
-                        <DataGridTextColumn Header="Process Name" Binding="{Binding ProcessName}" Foreground="Black" />
-                        <DataGridTextColumn Header="Size" Binding="{Binding WorkingSet64, StringFormat=' {0} Bytes'}" Foreground="Black" />
+                        <DataGridTextColumn HeaderStyle="{StaticResource datagridHeader}" Header="ID" Binding="{Binding Id}"  Foreground="Black" />
+                        <DataGridTextColumn HeaderStyle="{StaticResource datagridHeader}" Header="Process Name" Binding="{Binding ProcessName}" Foreground="Black" />
+                        <DataGridTextColumn HeaderStyle="{StaticResource datagridHeader}" Header="Size" Binding="{Binding WorkingSet64, StringFormat=' {0} Bytes'}" Foreground="Black" />
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
@@ -119,11 +145,13 @@
             <Label HorizontalAlignment="Right" Content="File Format :" />
             <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="0.2,0,0,-0.4" Width="150" Text="{Binding FileFormat}" IsReadOnly="True" />
         </Grid>
-        <StackPanel Grid.Row="5" VerticalAlignment="Center" Orientation="Horizontal">
-            <Button Content="Start" Command="{Binding StartWriting}"/>
-            <ProgressBar Width="800" Minimum ="0" Maximum="100" Value="{Binding Progress}"></ProgressBar>
-            <Button HorizontalAlignment="Right" Content="Stop" Command="{Binding StopWriting}"/>
+        <DockPanel Grid.Row="5" VerticalAlignment="Center" Margin="4">
 
-        </StackPanel>
+            <Button DockPanel.Dock="Left" Content="Start" Command="{Binding StartWriting}"/>
+            <Button DockPanel.Dock="Right" Content="Stop" Command="{Binding StopWriting}"/>
+            <ProgressBar Width="800" Minimum ="0" Maximum="100" Value="{Binding Progress}">
+            </ProgressBar>
+
+        </DockPanel>
     </Grid>
 </Window>

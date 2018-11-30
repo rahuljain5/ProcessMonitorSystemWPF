@@ -13,8 +13,8 @@
             <RowDefinition Height="19*" />
             <RowDefinition Height="191*" />
         </Grid.RowDefinitions>
-        <ComboBox x:Name="dropDown" SelectionChanged="ComboBox_SelectionChanged">
-            <ComboBoxItem>PagedSystemMemorySize64</ComboBoxItem>
+        <ComboBox x:Name="dropDown" SelectionChanged="ComboBox_SelectionChanged" Margin="5" >
+            <ComboBoxItem IsSelected="True">PagedSystemMemorySize64</ComboBoxItem>
             <ComboBoxItem>WorkingSet64</ComboBoxItem>
             <ComboBoxItem>NonpagedSystemMemorySize64</ComboBoxItem>
             <ComboBoxItem>VirtualMemorySize64</ComboBoxItem>

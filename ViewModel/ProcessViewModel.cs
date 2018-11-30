@@ -130,6 +130,7 @@ namespace PMSAppWPF.ViewModel
             isWriting = true;
             new Task(() =>{
                 while(!isDone) {
+
                 Progress++;
                 Thread.Sleep(SamplingRate * 1000);
                 }
@@ -148,6 +149,7 @@ namespace PMSAppWPF.ViewModel
         private void Stop(object parameter)
         {
             manager.Stop();
+            Progress = 100;
             sampledData = manager.GetSampledData();
             if(sampledData != null)
             {

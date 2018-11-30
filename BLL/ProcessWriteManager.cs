@@ -46,14 +46,14 @@ namespace PMSAppWPF.BLL
                         if (item != null)
                         {
                             sampledData[time].Add(item);
-                            ws.Cell("A" + (row + a).ToString()).Value = item.Id;
-                            ws.Cell("B" + (row + a).ToString()).Value = item.PrivateMemorySize64;
-                            ws.Cell("C" + (row + a).ToString()).Value = item.VirtualMemorySize64;
-                            ws.Cell("D" + (row + a).ToString()).Value = item.WorkingSet64;
-                            ws.Cell("E" + (row + a).ToString()).Value = item.PrivateMemorySize64;
-                            ws.Cell("F" + (row + a).ToString()).Value = item.PagedMemorySize64;
-                            ws.Cell("G" + (row + a).ToString()).Value = item.PagedSystemMemorySize64;
-                            ws.Cell("H" + (row + a).ToString()).Value = item.NonpagedSystemMemorySize64;
+                            ws.Cell("B" + (row + a).ToString()).Value = item.Id;
+                            ws.Cell("C" + (row + a).ToString()).Value = item.PrivateMemorySize64;
+                            ws.Cell("D" + (row + a).ToString()).Value = item.VirtualMemorySize64;
+                            ws.Cell("E" + (row + a).ToString()).Value = item.WorkingSet64;
+                            ws.Cell("F" + (row + a).ToString()).Value = item.PrivateMemorySize64;
+                            ws.Cell("G" + (row + a).ToString()).Value = item.PagedMemorySize64;
+                            ws.Cell("H" + (row + a).ToString()).Value = item.PagedSystemMemorySize64;
+                            ws.Cell("I" + (row + a).ToString()).Value = item.NonpagedSystemMemorySize64;
                         }
                         
                     }).IsCompleted)
@@ -63,6 +63,7 @@ namespace PMSAppWPF.BLL
                 }
                 if (token.IsCancellationRequested)
                 {
+                    ws.Columns().AdjustToContents();
                     workbook.SaveAs(path);
                     isDone = true;
                 }
@@ -85,15 +86,16 @@ namespace PMSAppWPF.BLL
 
         private void SetHeaders(IXLWorksheet ws)
         {
-
-            ws.Cell("A1").Value = "Process ID";
-            ws.Cell("B1").Value = "Private Memory";
-            ws.Cell("C1").Value = "Virtual Memory";
-            ws.Cell("D1").Value = "Working Set";
-            ws.Cell("E1").Value = "Working Set - Private";
-            ws.Cell("F1").Value = "Paged Memory";
-            ws.Cell("G1").Value = "Paged System Memory";
-            ws.Cell("H1").Value = "Non-Paged System Memory";
+            
+            ws.Cell("A1").Value = "TimeStamp";
+            ws.Cell("B1").Value = "Process ID";
+            ws.Cell("C1").Value = "Private Memory";
+            ws.Cell("D1").Value = "Virtual Memory";
+            ws.Cell("E1").Value = "Working Set";
+            ws.Cell("F1").Value = "Working Set - Private";
+            ws.Cell("G1").Value = "Paged Memory";
+            ws.Cell("H1").Value = "Paged System Memory";
+            ws.Cell("I1").Value = "Non-Paged System Memory";
         }
 
         public void Stop()

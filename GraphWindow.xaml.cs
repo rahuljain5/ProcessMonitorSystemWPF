@@ -31,18 +31,19 @@ namespace PMSAppWPF
             this.sampledData = sampledData;
             this.processes = processes;
             InitializeComponent();
+            var x = dropDown.SelectedItem as ComboBoxItem;
             DataContext = new MainViewModel(sampledData, processes, "PagedSystemMemorySize64");
         }
-
-
         public PlotModel MyModel { get; private set; }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var x = dropDown.SelectedItem as ComboBoxItem;
-            DataContext = new MainViewModel(sampledData, processes, x.Content.ToString());
+            if (x.Content != null)
+                DataContext = new MainViewModel(sampledData, processes, x.Content.ToString());
         }
     }
+
     public class MainViewModel
     {
         Dictionary<DateTime, List<Process>> sampledData;
@@ -59,10 +60,9 @@ namespace PMSAppWPF
 
         private void Plot()
         {
-            
+
             var model = new PlotModel() { LegendSymbolLength = 24 };
             Random rnd = new Random();
-            //OxyColor.FromRgb((byte)rnd.Next(256), (byte)rnd.Next(256), (byte)rnd.Next(256));
             foreach (Process proc in processes)
             {
                 double initVal = GetPropValue(proc, prop);
@@ -84,23 +84,24 @@ namespace PMSAppWPF
                     Process p = item.Value.Find(a => a.Id == proc.Id);
                     if (p != null)
                     {
-                        
-                        line.Points.Add(new DataPoint(i,(GetPropValue(p, prop) - initVal)));
-                        
+
+                        line.Points.Add(new DataPoint(i, (GetPropValue(p, prop) - initVal)));
+
                         i++;
                     }
                 }
                 model.Series.Add(line);
             }
-        
             model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, MinimumPadding = 0.1, MaximumPadding = 0.1, Title = "Sample Interval" });
             model.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, MinimumPadding = 0.1, MaximumPadding = 0.1, Title = prop });
             MyModel = model;
         }
+
         public static double GetPropValue(object src, string propName)
         {
             return double.Parse(src.GetType().GetProperty(propName).GetValue(src, null).ToString());
         }
+
         public PlotModel MyModel { get; private set; }
     }
 }
